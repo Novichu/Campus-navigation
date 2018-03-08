@@ -19,7 +19,7 @@ public:
 	//求最短路径
 	void Floyd();
 	//打印最短路径
-	void print_path();
+	void print_path(Campus c[10]);
 };
 //构造函数
 Graph_Fl::Graph_Fl(int vexnum, int edge) {
@@ -99,22 +99,23 @@ void Graph_Fl::Floyd() {
 	}
 }
 
-void Graph_Fl::print_path() {
+void Graph_Fl::print_path(Campus c[10]) {
 	cout << "各个顶点对的最短路径：" << endl;
 	int row = 0;
 	int col = 0;
 	int temp = 0;
 	for (row = 0; row < this->vexnum; row++) {
 		for (col = row + 1; col < this->vexnum; col++) {
-			cout << "v" << to_string(row + 1) << "---" << "v" << to_string(col + 1) << " weight: "
-				<< this->dis[row][col] << " path: " << " v" << to_string(row + 1);
+			
+			cout << c[row ].namelist << "---" << c[col ].namelist<< " 距离 "
+				<< this->dis[row][col] << " 路径是 " << c[row].namelist;
 			temp = path[row][col];
 			//循环输出途径的每条路径。
 			while (temp != col) {
-				cout << "-->" << "v" << to_string(temp + 1);
+				cout << "-->" << c[temp ].namelist;
 				temp = path[temp][col];
 			}
-			cout << "-->" << "v" << to_string(col + 1) << endl;
+			cout << "-->" << c[col ].namelist << endl;
 		}
 
 		cout << endl;

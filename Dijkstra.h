@@ -30,9 +30,9 @@ public:
 
 	void createGraph(int a[10][10]);
 	//打印邻接矩阵
-	void Dijkstra(int begin);
+	void Dijkstra(int begin,Campus c[10]);
 	//打印最短路径
-	void print_path(int);
+	void print_path(int,Campus c[10],int end);
 
 };
 //构造函数
@@ -64,12 +64,12 @@ void Graph_Di::createGraph(int a[10][10]) {
 
 
 
-void Graph_Di::Dijkstra(int begin){
+void Graph_Di::Dijkstra(int begin,Campus c[10]){
 	//首先初始化我们的dis数组
 	int i;
 	for (i = 0; i < this->vexnum; i++) {
 		//设置当前的路径
-		dis[i].path = "v" + to_string(begin) + "-->v" + to_string(i + 1);
+		dis[i].path =c[begin-1].namelist + "-->" + c[i+1].namelist;
 		dis[i].value = arc[begin - 1][i];
 	}
 	//设置起点的到起点的路径为0
@@ -98,19 +98,20 @@ void Graph_Di::Dijkstra(int begin){
 			if (!dis[i].visit && arc[temp][i] != INT_MAX && (dis[temp].value + arc[temp][i]) < dis[i].value) {
 				//如果新得到的边可以影响其他为访问的顶点，那就就更新它的最短路径和长度
 				dis[i].value = dis[temp].value + arc[temp][i];
-				dis[i].path = dis[temp].path + "-->v" + to_string(i + 1);
+				dis[i].path = dis[temp].path + "-->" + c[i+1].namelist;
 			}
 		}
 	}
 
 }
-void Graph_Di::print_path(int begin) {
+void Graph_Di::print_path(int begin,Campus c[10],int end) {
 	string str;
-	str = "v" + to_string(begin);
+	str = c[begin-1].namelist;
 	cout << "以" << str << "为起点的图的最短路径为：" << endl;
 	for (int i = 0; i != this->vexnum; i++) {
 		if (dis[i].value != INT_MAX)
-			cout << dis[i].path << "=" << dis[i].value << endl;
+			{if(i==end)
+			cout << dis[i].path << "=" << dis[i].value << endl;}
 		else {
 			cout << dis[i].path << "是无最短路径的" << endl;
 		}

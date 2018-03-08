@@ -1,6 +1,7 @@
+#include"campus.h"
 #include"Floyd.h"
 #include"Dijkstra.h"
-#include"campus.h"
+
 Distance d;
 Campus c[10] = { Campus(1, "东门"), Campus(2, "食堂"), Campus(3, "宿舍一"), Campus(4, "宿舍二"), Campus(5, "西门"), Campus(6, "澡堂"), Campus(7, "教学楼一"), Campus(8, "教学楼二"), Campus(9, "图书馆"), Campus(10, "操场") };
 int vexnum = 10; int edge = 19;
@@ -31,7 +32,7 @@ void twopartdistance(){
 			if (d.a[i][j] == INT_MAX)continue;
 			if (i == j)continue;
 
-			cout << c[i].namelist << "\t和\t" << c[j].namelist << "\t之间的距离为\t" << d.a[i][j] << endl;
+			cout << c[i].namelist << "\t和\t\t" << c[j].namelist << "\t之间的距离为\t" << d.a[i][j] << endl;
 		}
 
 
@@ -55,19 +56,25 @@ void settwopartdiatance(){
 	}
 }
 void twopointditance(){
-	int begin;
+	int begin;int end;
+	while(1){
 	cout << "输入起始点景点的编号" << endl;
 	cin >> begin;
+	cout << "输入终止点景点的编号" << endl;
+	cin >> end;
+	if(begin>0||begin<11||end>0||end<11) break;
+	cout<<"输入错误请重新输入"<<endl;
+	}
 	Graph_Di graph(vexnum, edge);
 	graph.createGraph(d.a);
-	graph.Dijkstra(begin);
-	graph.print_path(begin);
+	graph.Dijkstra(begin,c);
+	graph.print_path(begin,c,end-1);
 }
 void anywheredistance(){
 	Graph_Fl graph(vexnum, edge);
 	graph.createGraph(d.a);
 	graph.Floyd();
-	graph.print_path();
+	graph.print_path(c);
 }
 
 
